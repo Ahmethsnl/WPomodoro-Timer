@@ -1,5 +1,7 @@
 # Pomodoro Timer — Terminal Tabanlı Verimlilik Aracı
 
+[![Last Commit](https://img.shields.io/github/last-commit/ahmethsnl/WPomodoro-Timer?style=flat)](https://github.com/ahmethsnl/WPomodoro-Timer/commits)
+
 Bu proje, **terminalde çalışan basit ve etkili bir Pomodoro timer** sağlar.  
 İşlerinize odaklanmak ve düzenli molalarla verimliliğinizi artırmak için geliştirilmiştir.  
 
