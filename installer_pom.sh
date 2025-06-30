@@ -1,14 +1,17 @@
 #!/bin/bash
 
 SCRIPT_NAME="pomodoro.sh"
+REPO_NAME="WPomodoro-Timer"
 HOME_DIR="$HOME"
 TARGET_PATH="$HOME_DIR/$SCRIPT_NAME"
 
+# Öncelikle dosya var mı kontrol et
 if [ ! -f "$SCRIPT_NAME" ]; then
     echo "Hata: $SCRIPT_NAME dosyası bu klasörde bulunamadı!"
     exit 1
 fi
 
+# Dosyayı ev dizinine taşı
 mv -f "$SCRIPT_NAME" "$TARGET_PATH"
 echo "Dosya $TARGET_PATH konumuna taşındı."
 
@@ -17,6 +20,7 @@ ZSHRC="$HOME_DIR/.zshrc"
 
 ALIAS_CMD="alias wpom='bash $TARGET_PATH'"
 
+# Alias varsa temizle, sonra ekle
 grep -v "^alias wpom=" "$BASHRC" 2>/dev/null > "$BASHRC.tmp" && mv "$BASHRC.tmp" "$BASHRC"
 echo "$ALIAS_CMD" >> "$BASHRC"
 echo "Alias wpom bashrc dosyasına eklendi."
@@ -27,17 +31,19 @@ if [ -f "$ZSHRC" ]; then
     echo "Alias wpom zshrc dosyasına eklendi."
 fi
 
-if [ -d ".git" ]; then
-    rm -rf .git
-    echo ".git dizini silindi."
-fi
+# Bulunduğun dizin, repo klasörünün içi
+CURRENT_DIR="$(pwd)"
 
-for file in *; do
-    if [ "$file" != "install_pomodoro.sh" ]; then
-        rm -rf "$file"
-    fi
-done
-echo "Geçici dosyalar silindi, sadece ev dizininde $SCRIPT_NAME kaldı."
+# Bir üst dizine çık
+cd ..
+
+# Repo klasörünü komple sil
+if [ -d "$REPO_NAME" ]; then
+    rm -rf "$REPO_NAME"
+    echo "$REPO_NAME klasörü komple silindi."
+else
+    echo "$REPO_NAME klasörü bulunamadı."
+fi
 
 echo -e "\nKurulum tamamlandı! Yeni alias'ı kullanmak için terminali kapatıp aç veya şu komutu çalıştır:\n source ~/.bashrc (veya source ~/.zshrc)\n"
 
